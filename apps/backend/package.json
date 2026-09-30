@@ -2,10 +2,16 @@
   "name": "@nexa/backend",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "scripts": {
-    "start:dev": "node src/server.js",
+    "dev": "node --watch src/server.js",
     "start": "node src/server.js",
-    "build": "node -e \"console.log('Backend scaffold ready')\"",
-    "test": "echo \"No tests configured yet\""
+    "build": "node -e \"console.log('Backend ready')\"",
+    "test": "node --test"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.19.2",
+    "uuid": "^9.0.0"
   }
 }

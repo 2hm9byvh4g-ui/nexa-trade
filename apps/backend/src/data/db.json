@@ -1,0 +1,116 @@
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import { v4 as uuidv4 } from 'uuid';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const dbPath = path.join(__dirname, 'db.json');
+
+const seedDb = {
+  suppliers: [
+    {
+      id: 'sup_001',
+      name: 'Aisha Yaro',
+      company: 'Kano Hibiscus Traders',
+      country: 'Nigeria',
+      email: 'aisha@kanohibiscus.ng',
+      status: 'active',
+      verificationLevel: 'export-ready',
+      createdAt: '2026-01-12T10:00:00.000Z'
+    },
+    {
+      id: 'sup_002',
+      name: 'Musa Abdullahi',
+      company: 'Kaduna Spice Export',
+      country: 'Nigeria',
+      email: 'musa@kadunaspice.ng',
+      status: 'active',
+      verificationLevel: 'business-verified',
+      createdAt: '2026-01-15T12:00:00.000Z'
+    }
+  ],
+  buyers: [
+    {
+      id: 'buy_001',
+      name: 'Li Wei',
+      company: 'Qingdao Trade Hub',
+      country: 'China',
+      email: 'liwei@qingdao-trade.cn',
+      status: 'active',
+      verificationLevel: 'verified',
+      createdAt: '2026-01-20T16:00:00.000Z'
+    }
+  ],
+  products: [
+    {
+      id: 'prod_001',
+      supplierId: 'sup_001',
+      name: 'Dried Hibiscus Flowers',
+      category: 'Agriculture',
+      location: 'Kano, Nigeria',
+      quantity: '20 tonnes',
+      moq: '5 tonnes',
+      quality: 'Export grade',
+      certificates: ['Certificate of origin', 'Phytosanitary'],
+      status: 'approved',
+      createdAt: '2026-01-12T10:30:00.000Z'
+    },
+    {
+      id: 'prod_002',
+      supplierId: 'sup_002',
+      name: 'Premium Dried Ginger',
+      category: 'Agriculture',
+      location: 'Kaduna, Nigeria',
+      quantity: '50 tonnes',
+      moq: '5 tonnes',
+      quality: 'Export grade',
+      certificates: ['Certificate of origin', 'Inspection report'],
+      status: 'approved',
+      createdAt: '2026-01-16T08:30:00.000Z'
+    }
+  ],
+  rfqs: [
+    {
+      id: 'rfq_001',
+      buyerId: 'buy_001',
+      product: 'ginger',
+      quantity: '100 tonnes',
+      destination: 'Shanghai, China',
+      quality: 'Export grade',
+      delivery: 'CIF',
+      deadline: '2026-03-01',
+      status: 'open',
+      createdAt: '2026-01-21T09:00:00.000Z'
+    }
+  ],
+  verificationRequests: [
+    {
+      id: 'ver_001',
+      entityType: 'supplier',
+      entityId: 'sup_002',
+      status: 'pending',
+      notes: 'Awaiting business verification',
+      createdAt: '2026-01-18T14:30:00.000Z'
+    }
+  ],
+  messages: [],
+  transactions: []
+};
+
+export const ensureDb = () => {
+  if (!fs.existsSync(dbPath)) {
+    fs.writeFileSync(dbPath, JSON.stringify(seedDb, null, 2));
+  }
+};
+
+export const readDb = () => {
+  ensureDb();
+  const raw = fs.readFileSync(dbPath, 'utf8');
+  return JSON.parse(raw);
+};
+
+export const writeDb = (db) => {
+  fs.writeFileSync(dbPath, JSON.stringify(db, null, 2));
+};
+
+export const createId = (prefix = 'id') => `${prefix}_${uuidv4()}`;
