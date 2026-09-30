@@ -1,0 +1,19 @@
+{
+  "name": "nexa-trade",
+  "version": "0.1.0",
+  "description": "A B2B digital trade platform connecting verified Nigerian suppliers with international buyers",
+  "private": true,
+  "workspaces": [
+    "apps/frontend",
+    "apps/backend"
+  ],
+  "scripts": {
+    "dev": "concurrently \"yarn workspace @nexa/frontend dev\" \"yarn workspace @nexa/backend start:dev\"",
+    "build": "yarn workspace @nexa/frontend build && yarn workspace @nexa/backend build",
+    "start": "concurrently \"yarn workspace @nexa/frontend start\" \"yarn workspace @nexa/backend start\"",
+    "test": "yarn workspace @nexa/frontend test && yarn workspace @nexa/backend test"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.0"
+  }
+}
