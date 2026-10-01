@@ -1,70 +1,78 @@
 # NEXA TRADE
 
-Nigeria → Global B2B Trade Platform
+**From Nigerian Supply to Global Demand.**
 
-NEXA Trade connects verified Nigerian suppliers with international buyers through a demand-driven workflow:
+`VERIFY → MATCH → TRANSACT → TRACK`
 
-VERIFY → MATCH → TRANSACT → TRACK
+A B2B digital trade platform that connects verified Nigerian farmers, producers, processors and exporters with international buyers looking for Nigerian products.
 
-## Current state
+> NEXA Trade helps international buyers discover, verify and source products from Nigerian suppliers — and helps Nigerian producers reach global markets.
 
-This repository now includes:
+## What you can do
 
-- Landing page and conversion-focused marketing site
-- Supplier and buyer auth flow UI
-- Supplier product listing flow
-- Buyer RFQ posting and matching preview
-- Admin verification dashboard
-- Express API with mock/seeded trade entities
+- **Discover** Nigerian commodities in a live marketplace (hibiscus, sesame, ginger, cocoa, shea, cashew, and more)
+- **Verify** suppliers by identity, business, product and export-readiness
+- **Match** buyer requests to verified supply automatically
+- **Quote** with RFQs, compare offers, and negotiate in-platform
+- **Transact** through an order workflow with document checklists
+- **Track** shipments and deal status
+- **Analyze** demand with the export intelligence dashboard
+- **Ask** the AI Trade Assistant about Nigerian export products and process
 
-## Recommended next production upgrade
+## Stack
 
-The next step is to move from mock data to a real database-backed platform using PostgreSQL + Prisma + JWT auth.
+- [TanStack Start](https://tanstack.com/start) + React 19
+- Tailwind CSS v4 + Radix UI
+- Better Auth (email / password + OAuth)
+- PostgreSQL in production, PGLite for local/dev
+- Recharts for market intelligence
+- xAI for the Trade Assistant
 
-## Quick start
-
-### Backend
+## Run locally
 
 ```bash
-cd apps/backend
 npm install
 npm run dev
 ```
 
-### Frontend
+The app starts on port `8080`. Auth and the catalog seed are enabled; local development uses an in-memory Postgres (PGLite) so you can browse the marketplace, post buying requests, and use the dashboards without a cloud database.
 
-```bash
-cd apps/frontend
-npm install
-npm run dev
-```
+### Production database
 
-Open:
+Set `DATABASE_URL` to a Postgres connection string. Migrations in `migrations/` run on `npm run build` and via `npm run db:migrate`.
 
-- http://localhost:3000
-- http://localhost:3000/auth
-- http://localhost:3000/dashboard
-- http://localhost:3000/products
-- http://localhost:3000/buying-requests
-- http://localhost:3000/admin
+Optional:
 
-## API summary
+| Variable | Purpose |
+|---|---|
+| `DATABASE_URL` | Postgres (required in production) |
+| `XAI_API_KEY` | Powers the AI Trade Assistant |
+| `VITE_AUTH_ENABLED` | Keep `true` for accounts and per-user data |
 
-- GET /health
-- GET /api/dashboard-summary
-- GET /api/suppliers
-- POST /api/suppliers
-- GET /api/buyers
-- POST /api/buyers
-- GET /api/products
-- POST /api/products
-- GET /api/rfqs
-- POST /api/rfqs
-- GET /api/rfqs/:id/matches
-- GET /api/verification-requests
-- POST /api/verification-requests
-- POST /api/admin/verification-requests/:id/approve
+Never commit secrets. Copy `.env.example` if you add one locally.
 
-## Important note
+## Product surfaces
 
-This is still a prototype system and not yet production-ready for payment, customs, legal, identity verification, or regulated trade workflows. Those elements must be integrated with appropriate compliance and professional review.
+| Path | What it is |
+|---|---|
+| `/` | Landing — pitch, flow, featured commodities |
+| `/marketplace` | Public product catalog |
+| `/marketplace/:id` | Product detail + request a quote |
+| `/requests` | Open buying requests |
+| `/request` | Post “I want to buy” |
+| `/suppliers` | Verified supplier directory |
+| `/map` | Nigerian supply map |
+| `/intelligence` | Export demand analytics |
+| `/assistant` | AI Trade Assistant |
+| `/dashboard` | Role-aware workspace (products, quotes, orders, documents, messages, verification) |
+| `/admin` | Operator panel |
+
+## Roles
+
+1. **Nigerian supplier** — register, verify, list products, receive RFQs, complete orders
+2. **International buyer** — register, post demand, match suppliers, request quotations, purchase
+3. **Admin** — verify businesses, moderate listings, watch the trade pipeline
+
+## License
+
+MIT
