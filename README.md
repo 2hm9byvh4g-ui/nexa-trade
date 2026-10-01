@@ -4,34 +4,67 @@ Nigeria → Global B2B Trade Platform
 
 NEXA Trade connects verified Nigerian suppliers with international buyers through a demand-driven workflow:
 
-**VERIFY → MATCH → TRANSACT → TRACK**
+VERIFY → MATCH → TRANSACT → TRACK
 
-## MVP prototype
+## Current state
 
-This repository contains a responsive web-first prototype with:
+This repository now includes:
 
-- Supplier and buyer entry points
-- Product discovery marketplace
-- Buyer RFQ creation
-- Supplier verification levels
-- Supplier and buyer dashboard previews
-- Admin moderation preview
-- Matching-oriented product and request data
+- Landing page and conversion-focused marketing site
+- Supplier and buyer auth flow UI
+- Supplier product listing flow
+- Buyer RFQ posting and matching preview
+- Admin verification dashboard
+- Express API with mock/seeded trade entities
 
-## Run locally
+## Recommended next production upgrade
 
-Requirements: Node.js 18+
+The next step is to move from mock data to a real database-backed platform using PostgreSQL + Prisma + JWT auth.
+
+## Quick start
+
+### Backend
 
 ```bash
+cd apps/backend
 npm install
 npm run dev
 ```
 
-Open http://localhost:3000.
+### Frontend
 
-The current MVP uses local sample data and does not process real payments, identity documents, or export documentation. Those integrations should be added only with appropriate compliance, security, and professional review.
+```bash
+cd apps/frontend
+npm install
+npm run dev
+```
 
-## Structure
+Open:
 
-- `apps/frontend` — Next.js web application
-- `apps/backend` — lightweight API health-check scaffold
+- http://localhost:3000
+- http://localhost:3000/auth
+- http://localhost:3000/dashboard
+- http://localhost:3000/products
+- http://localhost:3000/buying-requests
+- http://localhost:3000/admin
+
+## API summary
+
+- GET /health
+- GET /api/dashboard-summary
+- GET /api/suppliers
+- POST /api/suppliers
+- GET /api/buyers
+- POST /api/buyers
+- GET /api/products
+- POST /api/products
+- GET /api/rfqs
+- POST /api/rfqs
+- GET /api/rfqs/:id/matches
+- GET /api/verification-requests
+- POST /api/verification-requests
+- POST /api/admin/verification-requests/:id/approve
+
+## Important note
+
+This is still a prototype system and not yet production-ready for payment, customs, legal, identity verification, or regulated trade workflows. Those elements must be integrated with appropriate compliance and professional review.
